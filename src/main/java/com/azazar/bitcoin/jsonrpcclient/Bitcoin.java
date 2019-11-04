@@ -95,7 +95,9 @@ public interface Bitcoin {
      * @throws BitcoinException 
      */
     public String createRawTransaction(List<TxInput> inputs, List<TxOutput> outputs) throws BitcoinException;
-    
+
+    public String fundrawTransaction(String strSign, String changeAddress, Double fee) throws BitcoinException;
+
     public RawTransaction decodeRawTransaction(String hex) throws BitcoinException;
     
     public String dumpPrivKey(String address) throws BitcoinException;
@@ -422,6 +424,7 @@ public interface Bitcoin {
         public String scriptPubKey();
         public double amount();
         public int confirmations();
+        public String redeemScript();
     }
 
     public List<Unspent> listUnspent() throws BitcoinException;

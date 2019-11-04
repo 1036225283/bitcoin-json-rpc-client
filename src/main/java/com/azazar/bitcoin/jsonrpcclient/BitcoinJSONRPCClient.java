@@ -266,6 +266,14 @@ public class BitcoinJSONRPCClient implements Bitcoin {
         return (String) query("createrawtransaction", pInputs, pOutputs);
     }
 
+    @Override
+    public String fundrawTransaction(String strSign, String changeAddress, Double fee) throws BitcoinException {
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("changeAddress", changeAddress);
+        Map<String, Object> result = (Map<String, Object>) query("fundrawtransaction", strSign, map);
+        return result.get("hex").toString();
+    }
+
     public RawTransaction decodeRawTransaction(String hex) throws BitcoinException {
         return new RawTransactionImpl((Map) query("decoderawtransaction", hex));
     }
@@ -1176,6 +1184,11 @@ public class BitcoinJSONRPCClient implements Bitcoin {
                 public int confirmations() {
                     return mapInt(m, "confirmations");
                 }
+
+                public String redeemScript() {
+                    return mapStr(m, "redeemScript");
+                }
+
 
             };
         }
